@@ -8,9 +8,9 @@ require 'contrib/npm.php';
 // Config
 
 set('repository', 'git@github.com:josephajibodu/flitbill.git');
-set('remote_user', 'josephajibodu');
+set('remote_user', 'ec2-user');
 
-set('identity_file', '~/.ssh/id_ed25519');
+set('identity_file', '~/.ssh/aws_54stores_ssh_key.pem');
 
 add('shared_files', []);
 add('shared_dirs', []);
@@ -21,8 +21,8 @@ add('writable_dirs', [
 // Hosts
 
 host('prod')
-    ->setHostname('64.227.73.131')
-    ->setDeployPath('/var/www/54stores.com/html');
+    ->setHostname('ec2-3-101-151-255.us-west-1.compute.amazonaws.co')
+    ->setDeployPath('/var/www/flitbil.com/html');
 
 // Tasks
 
