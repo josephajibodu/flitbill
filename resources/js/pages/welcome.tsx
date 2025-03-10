@@ -7,7 +7,14 @@ export default function Welcome() {
 
     return (
         <>
-            <Head title="Welcome">
+            <Head title="Flitbill | The bills payment experience you deserve">
+                <meta name="description" content="Flitbill is a bills payment solution that was made specifically for you. Watch out!" />
+                <meta
+                    name="keywords"
+                    content="bills payment, bills payment solution, bills payment experience, bills payment experience you deserve"
+                />
+                <meta name="author" content="Flitbill" />
+                <meta name="robots" content="index, follow" />
                 <link rel="preconnect" href="https://fonts.bunny.net" />
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
