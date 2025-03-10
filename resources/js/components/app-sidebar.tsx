@@ -5,7 +5,8 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { LayoutGrid } from 'lucide-react';
-import AppLogo from './app-logo';
+import AppLogoIcon from './app-logo-icon';
+import AppLogoWordmark from './app-logo-wordmark';
 
 const mainNavItems: NavItem[] = [
     {
@@ -25,7 +26,14 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" className="rounded-none" asChild>
                             <Link href="/dashboard" prefetch>
-                                <AppLogo />
+                                <div className="flex items-center gap-2">
+                                    <div className="flex aspect-square size-8 items-center justify-center rounded-none">
+                                        <AppLogoIcon className="text-primary size-8 fill-current dark:text-white" />
+                                    </div>
+                                    <div className="ml-1 grid flex-1 text-left text-sm">
+                                        <AppLogoWordmark className="h-6 text-black dark:text-white" />
+                                    </div>
+                                </div>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
