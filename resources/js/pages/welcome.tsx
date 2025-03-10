@@ -1,4 +1,3 @@
-import AppLogoIcon from '@/components/app-logo-icon';
 import AppLogoWordmark from '@/components/app-logo-wordmark';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
@@ -13,23 +12,18 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
 
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] text-[#1b1b18] lg:justify-center">
+            <div className="flex min-h-screen flex-col items-center bg-white lg:justify-center dark:bg-black">
                 <header className="w-full border-b py-4 text-sm not-has-[nav]:hidden">
                     <nav className="mx-auto flex w-full max-w-screen-xl justify-between gap-4 px-4 md:px-0 lg:max-w-4xl">
                         <div className="flex items-center gap-2">
-                            <div className="flex aspect-square size-8 items-center justify-center rounded-none">
-                                <AppLogoIcon className="size-8 fill-current text-teal-500" />
-                            </div>
-                            <div className="ml-1 grid flex-1 text-left text-sm">
-                                <AppLogoWordmark className="h-6 text-black" />
-                            </div>
+                            <AppLogoWordmark className="h-9 text-black dark:text-white" />
                         </div>
 
                         <div className="flex items-center justify-end gap-2 md:gap-4">
                             {auth.user ? (
                                 <Link
                                     href={route('dashboard')}
-                                    className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
+                                    className="neolift-effect-primary inline-block rounded-sm border px-5 py-1.5 text-sm leading-normal text-[#1b1b18] dark:bg-white"
                                 >
                                     Dashboard
                                 </Link>
@@ -37,7 +31,7 @@ export default function Welcome() {
                                 <>
                                     <Link
                                         href={route('login')}
-                                        className="neolift-effect inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18]"
+                                        className="neolift-effect inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] dark:bg-white"
                                     >
                                         Log in
                                     </Link>
