@@ -29,11 +29,15 @@ task('npm:build', function () {
     run('cd {{release_path}} && {{bin/npm}} run build');
 });
 
+task('npm:build', function () {
+    run('cd {{release_path}} && {{bin/npm}} run build:ssr');
+});
+
 task('deploy', [
     'deploy:prepare',
     'deploy:vendors',
     'npm:install',
-    'npm:build',
+    'npm:build:ssr',
     'artisan:storage:link',
     'artisan:config:cache',
     'artisan:route:cache',
