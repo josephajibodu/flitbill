@@ -21,7 +21,7 @@ add('writable_dirs', [
 // Hosts
 host('prod')
     ->setHostname('ec2-18-144-6-6.us-west-1.compute.amazonaws.com')
-    ->setDeployPath('/var/www/flitbil.com');
+    ->setDeployPath('/var/www/flitbill.com');
 
 // Tasks
 

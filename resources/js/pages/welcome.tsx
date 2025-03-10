@@ -13,12 +13,12 @@ export default function Welcome() {
                 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
             </Head>
 
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] text-[#1b1b18] lg:justify-center dark:bg-[#0a0a0a]">
+            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] text-[#1b1b18] lg:justify-center">
                 <header className="w-full border-b py-4 text-sm not-has-[nav]:hidden">
                     <nav className="mx-auto flex w-full max-w-screen-xl justify-between gap-4 px-4 md:px-0 lg:max-w-4xl">
                         <div className="flex items-center gap-2">
                             <div className="flex aspect-square size-8 items-center justify-center rounded-none">
-                                <AppLogoIcon className="text-primary size-8 fill-current dark:text-black" />
+                                <AppLogoIcon className="size-8 fill-current text-teal-500" />
                             </div>
                             <div className="ml-1 grid flex-1 text-left text-sm">
                                 <AppLogoWordmark className="h-6 text-black" />
@@ -52,8 +52,9 @@ export default function Welcome() {
                         </div>
                     </nav>
                 </header>
-                <div className="bg-primary flex w-full flex-grow items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="neolift-effect flex min-h-[400px] w-full max-w-[335px] flex-col items-center rounded-sm border bg-amber-500 px-4 py-4 md:px-8 lg:max-w-4xl dark:bg-[#0a0a0a]">
+
+                <div className="flex w-full flex-grow items-center justify-center bg-teal-500 opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
+                    <main className="neolift-effect flex min-h-[400px] w-full max-w-[335px] flex-col items-center rounded-sm border bg-amber-500 px-4 py-4 md:px-8 lg:max-w-4xl">
                         <p className="mt-8 text-center text-3xl md:text-4xl">Bills Payment Solution that was made specifically for you. Watch out!</p>
 
                         {quote && (
