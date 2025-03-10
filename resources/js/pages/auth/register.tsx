@@ -101,7 +101,7 @@ export default function Register() {
                         <InputError message={errors.password_confirmation} />
                     </div>
 
-                    <Button type="submit" className="neolift-effect-primary mt-2 w-full" tabIndex={5} disabled={processing}>
+                    <Button type="submit" className="neolift-effect hover:bg-primary mt-2 w-full" tabIndex={5} disabled={processing}>
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Create account
                     </Button>

@@ -3,15 +3,7 @@ import { SVGAttributes } from 'react';
 
 export default function AppLogoIcon({ className, ...props }: SVGAttributes<SVGElement>) {
     return (
-        <svg
-            className={cn('text-primary fill-primary', className)}
-            {...props}
-            width="146"
-            height="146"
-            viewBox="0 0 146 146"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg className={cn('', className)} {...props} viewBox="0 0 146 146" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M0 16C0 7.16344 7.16344 0 16 0H130C138.837 0 146 7.16344 146 16V130C146 138.837 138.837 146 130 146H16C7.16344 146 0 138.837 0 130V16Z"
                 fill="currentColor"
