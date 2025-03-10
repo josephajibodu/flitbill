@@ -29,7 +29,7 @@ task('npm:build', function () {
     run('cd {{release_path}} && {{bin/npm}} run build');
 });
 
-task('npm:build', function () {
+task('npm:build:ssr', function () {
     run('cd {{release_path}} && {{bin/npm}} run build:ssr');
 });
 
