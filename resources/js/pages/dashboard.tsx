@@ -3,6 +3,14 @@ import type {BreadcrumbItem} from "@/types"
 import {Head} from "@inertiajs/react"
 import {Button} from "@/components/ui/button"
 import {Database, MoreHorizontal, Phone, Tv, WalletMinimal, Zap} from "lucide-react"
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {
+    Pagination,
+    PaginationContent, PaginationEllipsis,
+    PaginationItem,
+    PaginationLink, PaginationNext,
+    PaginationPrevious
+} from "@/components/ui/pagination";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -86,13 +94,60 @@ export default function Dashboard() {
 
                     </div>
 
-                    <div className="neo-card-border p-6 min-h-[300px] bg-white">
+                    <div className="min-h-[300px]">
                         <h2 className="text-2xl font-bold">Recent Activity</h2>
                         <div className="mt-4">
                             {/* Placeholder for activity content */}
-                            <div className="bg-background neo-card p-4 mb-3">
+                            <div className="bg-background neo-card p-4 mb-3 hidden">
                                 <p className="font-medium">No recent transactions</p>
                             </div>
+
+                            <div className="neo-card-border">
+                                <Table>
+                                    <TableCaption className="sr-only">A list of your recent transactions.</TableCaption>
+                                    <TableHeader className="py-4">
+                                        <TableRow>
+                                            <TableHead>Type</TableHead>
+                                            <TableHead>Amount</TableHead>
+                                            <TableHead>Date</TableHead>
+                                            <TableHead className="text-right">Status</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+
+                                    <TableBody>
+                                        {Array.from({ length: 10}).map((_, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell className="font-medium py-4">Giftcard</TableCell>
+                                                <TableCell>20,000</TableCell>
+                                                <TableCell>Today, 10:12pm</TableCell>
+                                                <TableCell className="text-right">
+                                                    Success
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </div>
+
+                            <div className="mt-4 hidden">
+                                <Pagination>
+                                    <PaginationContent>
+                                        <PaginationItem>
+                                            <PaginationPrevious href="#" />
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationLink href="#">1</PaginationLink>
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationEllipsis />
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationNext href="#" />
+                                        </PaginationItem>
+                                    </PaginationContent>
+                                </Pagination>
+                            </div>
+
                         </div>
                     </div>
                 </div>
