@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid } from 'lucide-react';
+import { LayoutGrid, PhoneCall, PlugZap, Tv, Wifi } from 'lucide-react';
 import AppLogoIcon from './app-logo-icon';
 import AppLogoWordmark from './app-logo-wordmark';
 
@@ -13,6 +13,26 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         url: '/dashboard',
         icon: LayoutGrid,
+    },
+    {
+        title: 'Airtime Topup',
+        url: route('airtime.create'),
+        icon: PhoneCall,
+    },
+    {
+        title: 'Data Topup',
+        url: '/data',
+        icon: Wifi,
+    },
+    {
+        title: 'Electricity',
+        url: '/electricity',
+        icon: PlugZap,
+    },
+    {
+        title: 'Cable/TV',
+        url: '/cable-tv',
+        icon: Tv,
     },
 ];
 

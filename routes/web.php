@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AirtimeTopupController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,7 +13,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-//    Route::get('buy-data', );
+   Route::get('airtime', [AirtimeTopupController::class, 'create'])->name('airtime.create');
+   Route::get('airtime/history', [AirtimeTopupController::class, 'index'])->name('airtime.index');
+   Route::post('airtime', [AirtimeTopupController::class, 'store'])->name('airtime.store');
 });
 
 require __DIR__.'/settings.php';
