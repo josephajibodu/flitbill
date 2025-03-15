@@ -5,9 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
+import { cn } from '@/lib/utils';
 import type { BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { CreditCard, Receipt } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,25 +23,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const networks = [
-    {
-        name: 'MTN',
-        logo: 'https://via.placeholder.com/150',
-    },
-    {
-        name: 'Airtel',
-        logo: 'https://via.placeholder.com/150',
-    },
-    {
-        name: 'Glo',
-        logo: 'https://via.placeholder.com/150',
-    },
-    {
-        name: '9mobile',
-        logo: 'https://via.placeholder.com/150',
-    },
+    { name: 'MTN', logo: '/images/providers/mtn.svg', color: '#ffce27' },
+    { name: 'Airtel', logo: '/images/providers/airtel.svg', color: '#ff1f1a' },
+    { name: 'Glo', logo: '/images/providers/glo.svg', color: '#448141' },
+    { name: '9mobile', logo: '/images/providers/9mobile.svg', color: '#1b765d' },
 ];
 
 export default function BuyAirtime() {
+    const [selectedNetwork, setSelectedNetwork] = useState<string | null>(null);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -51,21 +43,33 @@ export default function BuyAirtime() {
                             <h2 className="mb-4 text-base font-medium">Select Network Provider</h2>
                             <div className="flex flex-wrap gap-4">
                                 {networks.map((network) => (
-                                    <label className="neo-card group has-checked:bg-primary/10 has-checked:border-primary flex h-[100px] cursor-pointer flex-col items-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px]">
-                                        <input type="radio" name="provider" className="hidden" />
+                                    <label
+                                        className={cn(
+                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-[100px] cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px]',
+                                            {
+                                                'neo-active': selectedNetwork === network.name,
+                                            },
+                                        )}
+                                        style={
+                                            {
+                                                '--highlight': network.color,
+                                            } as React.CSSProperties
+                                        }
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="provider"
+                                            className="hidden"
+                                            checked={selectedNetwork === network.name}
+                                            onChange={() => setSelectedNetwork(network.name)}
+                                        />
                                         <div className="flex flex-col items-center">
-                                            <div className="group-has-checked:bg-primary flex h-12 w-12 items-center justify-center rounded-full">
-                                                <svg
-                                                    className="h-6 w-6 group-has-checked:text-white"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                                                </svg>
-                                            </div>
-                                            <span className="text-app-black">{network.name}</span>
+                                            <img
+                                                src={network.logo}
+                                                alt={network.name}
+                                                className="h-14 min-w-20 grayscale transition-all duration-200 group-hover:grayscale-0 group-has-checked:grayscale-0"
+                                            />
+                                            <span className="text-app-black sr-only">{network.name}</span>
                                         </div>
                                     </label>
                                 ))}
