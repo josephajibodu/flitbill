@@ -7,9 +7,8 @@ import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
 import { cn } from '@/lib/utils';
 import type { BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { CreditCard, Receipt } from 'lucide-react';
-import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -30,7 +29,11 @@ const networks = [
 ];
 
 export default function BuyAirtime() {
-    const [selectedNetwork, setSelectedNetwork] = useState<string | null>(null);
+    const { data, setData } = useForm({
+        network: '',
+        phone_number: '',
+        amount: '',
+    });
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -47,7 +50,7 @@ export default function BuyAirtime() {
                                         className={cn(
                                             'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-[100px] cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px]',
                                             {
-                                                'neo-active': selectedNetwork === network.name,
+                                                'neo-active': data.network === network.name,
                                             },
                                         )}
                                         style={
@@ -60,8 +63,8 @@ export default function BuyAirtime() {
                                             type="radio"
                                             name="provider"
                                             className="hidden"
-                                            checked={selectedNetwork === network.name}
-                                            onChange={() => setSelectedNetwork(network.name)}
+                                            checked={data.network === network.name}
+                                            onChange={() => setData('network', network.name)}
                                         />
                                         <div className="flex flex-col items-center">
                                             <img
@@ -79,7 +82,13 @@ export default function BuyAirtime() {
                                 <Label htmlFor="phone_number" className="text-base">
                                     Phone Number
                                 </Label>
-                                <Input type="tel" id="phone_number" placeholder="08012345678" />
+                                <Input
+                                    type="tel"
+                                    id="phone_number"
+                                    placeholder="08012345678"
+                                    value={data.phone_number}
+                                    onChange={(e) => setData('phone_number', e.target.value)}
+                                />
                             </div>
 
                             <div className="mt-6 grid w-full items-center gap-1.5">
@@ -91,7 +100,13 @@ export default function BuyAirtime() {
                                         Min: <span className="font-semibold">₦100</span> | Max: <span className="font-semibold">₦100,000</span>
                                     </span>
                                 </div>
-                                <Input type="text" id="amount" placeholder="1000" />
+                                <Input
+                                    type="text"
+                                    id="amount"
+                                    placeholder="₦0.00"
+                                    value={data.amount}
+                                    onChange={(e) => setData('amount', e.target.value)}
+                                />
 
                                 <div className="flex gap-4 overflow-x-auto py-2">
                                     {[500, 1000, 2000, 5000, 10_000].map((amt, index) => (
@@ -99,6 +114,7 @@ export default function BuyAirtime() {
                                             key={index}
                                             variant="secondary"
                                             className="text-app-black neolift-effect hover:bg-primary h-10 w-[80px]"
+                                            onClick={() => setData('amount', amt.toString())}
                                         >
                                             +{amt}
                                         </Button>
@@ -127,27 +143,27 @@ export default function BuyAirtime() {
                             <div className="space-y-4">
                                 <div className="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-full">
+                                        <div className="flex w-20 items-center justify-center rounded-full">
                                             <img
-                                                src={'/placeholder.svg?height=30&width=30'}
-                                                alt={'Network'}
-                                                width={24}
-                                                height={24}
-                                                className="rounded-full"
+                                                src={
+                                                    networks.find((network) => network.name === data.network)?.logo ||
+                                                    '/placeholder.svg?height=30&width=30'
+                                                }
+                                                alt={data.network || 'Network'}
+                                                className="h-14 min-w-10"
                                             />
                                         </div>
                                         <div>
-                                            <p className="font-medium">'Select Network</p>
-                                            <p className="text-muted-foreground text-sm">No number selected</p>
+                                            <p className="font-medium">{data.network ?? 'Select Network'}</p>
+                                            <p className="text-muted-foreground text-sm">{data.phone_number ?? 'No number selected'}</p>
                                         </div>
                                     </div>
-                                    <div className="text-muted-foreground">Select a network provider</div>
                                 </div>
 
                                 <div className="space-y-3">
                                     <div className="flex justify-between">
                                         <span className="text-muted-foreground">Airtime Amount</span>
-                                        <span className="font-medium">₦0</span>
+                                        <span className="font-medium">₦{data.amount}</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-muted-foreground">Service Fee</span>
@@ -156,7 +172,7 @@ export default function BuyAirtime() {
                                     <Separator />
                                     <div className="flex justify-between">
                                         <span className="font-medium">Total</span>
-                                        <span className="font-bold">₦0</span>
+                                        <span className="font-bold">₦{data.amount}</span>
                                     </div>
                                 </div>
 
