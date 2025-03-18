@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -38,17 +37,17 @@ export default function BuyAirtime() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div className="grid h-full flex-1 grid-cols-1 flex-col gap-6 rounded-xl sm:grid-cols-2">
+            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl">
+                <div className="grid h-full flex-1 grid-cols-1 flex-col rounded-xl sm:grid-cols-2">
                     {/* Form */}
-                    <Card className="neo-card-border">
+                    <Card className="rounded-none border-0 bg-transparent">
                         <CardContent>
                             <h2 className="mb-4 text-base font-medium">Select Network Provider</h2>
-                            <div className="flex flex-wrap gap-4">
+                            <div className="grid grid-cols-4 gap-4">
                                 {networks.map((network) => (
                                     <label
                                         className={cn(
-                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-[100px] cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px]',
+                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px] md:h-[100px] md:justify-center',
                                             {
                                                 'neo-active': data.network === network.name,
                                             },
@@ -59,21 +58,24 @@ export default function BuyAirtime() {
                                             } as React.CSSProperties
                                         }
                                     >
-                                        <input
-                                            type="radio"
-                                            name="provider"
-                                            className="hidden"
-                                            checked={data.network === network.name}
-                                            onChange={() => setData('network', network.name)}
-                                        />
                                         <div className="flex flex-col items-center">
                                             <img
                                                 src={network.logo}
                                                 alt={network.name}
-                                                className="h-14 min-w-20 grayscale transition-all duration-200 group-hover:grayscale-0 group-has-checked:grayscale-0"
+                                                className={cn(
+                                                    'h-10 grayscale transition-all duration-200 group-hover:grayscale-0 group-has-checked:grayscale-0 md:h-14 md:min-w-20',
+                                                )}
                                             />
                                             <span className="text-app-black sr-only">{network.name}</span>
                                         </div>
+
+                                        <input
+                                            type="radio"
+                                            name="provider"
+                                            className="checked:border-primary checked:ring-primary box-content hidden h-1.5 w-1.5 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding ring-1 ring-gray-950/20 outline-none"
+                                            checked={data.network === network.name}
+                                            onChange={() => setData('network', network.name)}
+                                        />
                                     </label>
                                 ))}
                             </div>
@@ -112,8 +114,7 @@ export default function BuyAirtime() {
                                     {[500, 1000, 2000, 5000, 10_000].map((amt, index) => (
                                         <Button
                                             key={index}
-                                            variant="secondary"
-                                            className="text-app-black neolift-effect hover:bg-primary h-10 w-[80px]"
+                                            className="text-app-black neolift-effect hover:bg-primary h-8 w-[80px] border-none bg-gray-200 md:h-10"
                                             onClick={() => setData('amount', amt.toString())}
                                         >
                                             +{amt}
@@ -121,26 +122,16 @@ export default function BuyAirtime() {
                                     ))}
                                 </div>
                             </div>
-
-                            <div className="mt-6 flex items-center space-x-2">
-                                <Checkbox id="terms" />
-                                <label
-                                    htmlFor="terms"
-                                    className="text-base leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                >
-                                    Add to beneficiary
-                                </label>
-                            </div>
                         </CardContent>
                     </Card>
 
-                    <Card className="shadow-md">
+                    <Card className="rounded-none border-0 border-l shadow-md">
                         <CardHeader>
                             <CardTitle>Order Summary</CardTitle>
                             <CardDescription>Review your purchase details</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="space-y-4">
+                            <div className="flex flex-col space-y-4">
                                 <div className="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
                                     <div className="flex items-center gap-3">
                                         <div className="flex w-20 items-center justify-center rounded-full">
@@ -150,27 +141,27 @@ export default function BuyAirtime() {
                                                     '/placeholder.svg?height=30&width=30'
                                                 }
                                                 alt={data.network || 'Network'}
-                                                className="h-14 min-w-10"
+                                                className="h-10 min-w-10 md:h-14"
                                             />
                                         </div>
                                         <div>
-                                            <p className="font-medium">{data.network ?? 'Select Network'}</p>
-                                            <p className="text-muted-foreground text-sm">{data.phone_number ?? 'No number selected'}</p>
+                                            <p className="font-medium">{data.network || 'Select Network'}</p>
+                                            <p className="text-muted-foreground text-sm">{data.phone_number || 'No number selected'}</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="space-y-3">
-                                    <div className="flex justify-between">
+                                <div className="space-y-3 border py-4">
+                                    <div className="flex justify-between px-4">
                                         <span className="text-muted-foreground">Airtime Amount</span>
                                         <span className="font-medium">₦{data.amount}</span>
                                     </div>
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between px-4">
                                         <span className="text-muted-foreground">Service Fee</span>
                                         <span className="font-medium">₦0</span>
                                     </div>
                                     <Separator />
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between px-4">
                                         <span className="font-medium">Total</span>
                                         <span className="font-bold">₦{data.amount}</span>
                                     </div>
@@ -185,6 +176,10 @@ export default function BuyAirtime() {
                                         <Receipt className="text-muted-foreground h-4 w-4" />
                                         <span>Instant airtime delivery</span>
                                     </div>
+                                </div>
+
+                                <div className="mt-6">
+                                    <Button className="neolift-effect hover:bg-primary w-full">Proceed to Payment</Button>
                                 </div>
                             </div>
                         </CardContent>
