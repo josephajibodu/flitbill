@@ -36,7 +36,13 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const footerNavItems: NavItem[] = [];
+const footerNavItems: NavItem[] = [
+    {
+        title: 'Cable/TV',
+        url: '/cable-tv',
+        icon: Tv,
+    },
+];
 
 export function AppSidebar() {
     return (
@@ -51,7 +57,7 @@ export function AppSidebar() {
                                         <AppLogoIcon className="text-primary size-8 fill-current dark:text-white" />
                                     </div>
                                     <div className="ml-1 grid flex-1 text-left text-sm">
-                                        <AppLogoWordmark className="h-6 text-black dark:text-white" />
+                                        <AppLogoWordmark className="h-6 text-white" />
                                     </div>
                                 </div>
                             </Link>
