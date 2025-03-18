@@ -4,10 +4,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import AppLayout from '@/layouts/app-layout';
-import { cn } from '@/lib/utils';
+import { cn, toMoney } from '@/lib/utils';
 import type { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import { CreditCard, Receipt } from 'lucide-react';
+import { CreditCard, MessageCircleQuestionIcon, Receipt } from 'lucide-react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -28,11 +29,30 @@ const networks = [
 ];
 
 export default function BuyAirtime() {
+    const [formattedAmount, setFormattedAmount] = useState('');
     const { data, setData } = useForm({
         network: '',
         phone_number: '',
         amount: '',
     });
+
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let input = e.target.value.replace(/[^\d.]/g, ''); // Remove invalid characters
+
+        const parts = input.split('.');
+        if (parts.length > 2) {
+            input = parts[0] + '.' + parts.slice(1).join('');
+        }
+
+        // eslint-disable-next-line prefer-const
+        let [integer, decimal] = input.split('.');
+        integer = integer?.replace(/\B(?=(\d{3})+(?!\d))/g, ',') || '';
+
+        const formattedValue = decimal !== undefined ? `${integer}.${decimal.slice(0, 2)}` : integer;
+
+        setFormattedAmount(formattedValue);
+        setData('amount', input); // Keep raw numeric value
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -102,20 +122,18 @@ export default function BuyAirtime() {
                                         Min: <span className="font-semibold">₦100</span> | Max: <span className="font-semibold">₦100,000</span>
                                     </span>
                                 </div>
-                                <Input
-                                    type="text"
-                                    id="amount"
-                                    placeholder="₦0.00"
-                                    value={data.amount}
-                                    onChange={(e) => setData('amount', e.target.value)}
-                                />
+                                <Input type="text" id="amount" placeholder="₦0.00" value={formattedAmount} onChange={handleAmountChange} />
 
                                 <div className="flex gap-4 overflow-x-auto py-2">
                                     {[500, 1000, 2000, 5000, 10_000].map((amt, index) => (
                                         <Button
                                             key={index}
                                             className="text-app-black neolift-effect hover:bg-primary h-8 w-[80px] border-none bg-gray-200 md:h-10"
-                                            onClick={() => setData('amount', amt.toString())}
+                                            onClick={() => {
+                                                const formatted = amt.toLocaleString();
+                                                setFormattedAmount(formatted);
+                                                setData('amount', amt.toString());
+                                            }}
                                         >
                                             +{amt}
                                         </Button>
@@ -130,19 +148,20 @@ export default function BuyAirtime() {
                             <CardTitle>Order Summary</CardTitle>
                             <CardDescription>Review your purchase details</CardDescription>
                         </CardHeader>
-                        <CardContent>
-                            <div className="flex flex-col space-y-4">
+                        <CardContent className="h-full">
+                            <div className="flex h-full flex-col space-y-4">
                                 <div className="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
                                     <div className="flex items-center gap-3">
                                         <div className="flex w-20 items-center justify-center rounded-full">
-                                            <img
-                                                src={
-                                                    networks.find((network) => network.name === data.network)?.logo ||
-                                                    '/placeholder.svg?height=30&width=30'
-                                                }
-                                                alt={data.network || 'Network'}
-                                                className="h-10 min-w-10 md:h-14"
-                                            />
+                                            {data.network ? (
+                                                <img
+                                                    src={networks.find((network) => network.name === data.network)?.logo}
+                                                    alt={data.network || 'Network'}
+                                                    className="h-10 min-w-10 md:h-14"
+                                                />
+                                            ) : (
+                                                <MessageCircleQuestionIcon className="h-10 min-w-10 md:h-14" />
+                                            )}
                                         </div>
                                         <div>
                                             <p className="font-medium">{data.network || 'Select Network'}</p>
@@ -154,16 +173,16 @@ export default function BuyAirtime() {
                                 <div className="space-y-3 border py-4">
                                     <div className="flex justify-between px-4">
                                         <span className="text-muted-foreground">Airtime Amount</span>
-                                        <span className="font-medium">₦{data.amount}</span>
+                                        <span className="font-medium">{toMoney(Number(data.amount) || 0)}</span>
                                     </div>
                                     <div className="flex justify-between px-4">
                                         <span className="text-muted-foreground">Service Fee</span>
-                                        <span className="font-medium">₦0</span>
+                                        <span className="font-medium">{toMoney(0)}</span>
                                     </div>
                                     <Separator />
                                     <div className="flex justify-between px-4">
                                         <span className="font-medium">Total</span>
-                                        <span className="font-bold">₦{data.amount}</span>
+                                        <span className="font-bold">{toMoney(Number(data.amount))}</span>
                                     </div>
                                 </div>
 
@@ -178,7 +197,7 @@ export default function BuyAirtime() {
                                     </div>
                                 </div>
 
-                                <div className="mt-6">
+                                <div className="mt-auto">
                                     <Button className="neolift-effect hover:bg-primary w-full">Proceed to Payment</Button>
                                 </div>
                             </div>
