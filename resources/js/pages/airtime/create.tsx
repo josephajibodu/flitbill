@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -8,7 +9,7 @@ import { cn, toMoney } from '@/lib/utils';
 import type { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { CreditCard, MessageCircleQuestionIcon, Receipt } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -29,6 +30,8 @@ const networks = [
 ];
 
 export default function BuyAirtime() {
+    const [isMobile, setIsMobile] = useState(false);
+
     const [formattedAmount, setFormattedAmount] = useState('');
     const { data, setData } = useForm({
         network: '',
@@ -54,6 +57,68 @@ export default function BuyAirtime() {
         setData('amount', input); // Keep raw numeric value
     };
 
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 640); // Adjust breakpoint as needed
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const OrderSummaryContent = (
+        <div className="flex h-full flex-col space-y-4">
+            <div className="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
+                <div className="flex items-center gap-3">
+                    <div className="flex w-20 items-center justify-center rounded-full">
+                        {data.network ? (
+                            <img
+                                src={networks.find((network) => network.name === data.network)?.logo}
+                                alt={data.network || 'Network'}
+                                className="h-10 min-w-10 md:h-14"
+                            />
+                        ) : (
+                            <MessageCircleQuestionIcon className="h-10 min-w-10 md:h-14" />
+                        )}
+                    </div>
+                    <div>
+                        <p className="font-medium">{data.network || 'Select Network'}</p>
+                        <p className="text-muted-foreground text-sm">{data.phone_number || 'No number selected'}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="space-y-3 border py-4">
+                <div className="flex justify-between px-4">
+                    <span className="text-muted-foreground">Airtime Amount</span>
+                    <span className="font-medium">{toMoney(Number(data.amount) || 0)}</span>
+                </div>
+                <div className="flex justify-between px-4">
+                    <span className="text-muted-foreground">Service Fee</span>
+                    <span className="font-medium">{toMoney(0)}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between px-4">
+                    <span className="font-medium">Total</span>
+                    <span className="font-bold">{toMoney(Number(data.amount))}</span>
+                </div>
+            </div>
+
+            <div className="space-y-3 pt-4">
+                <div className="flex items-center gap-2 text-sm">
+                    <CreditCard className="text-muted-foreground h-4 w-4" />
+                    <span>Secure payment processing</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                    <Receipt className="text-muted-foreground h-4 w-4" />
+                    <span>Instant airtime delivery</span>
+                </div>
+            </div>
+
+            <div className="mt-auto">
+                <Button className="neolift-effect hover:bg-primary w-full">Proceed to Payment</Button>
+            </div>
+        </div>
+    );
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -67,7 +132,7 @@ export default function BuyAirtime() {
                                 {networks.map((network) => (
                                     <label
                                         className={cn(
-                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px] md:h-[100px] md:justify-center',
+                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white md:h-[100px] md:justify-center',
                                             {
                                                 'neo-active': data.network === network.name,
                                             },
@@ -143,66 +208,28 @@ export default function BuyAirtime() {
                         </CardContent>
                     </Card>
 
-                    <Card className="rounded-none border-0 border-l shadow-md">
-                        <CardHeader>
-                            <CardTitle>Order Summary</CardTitle>
-                            <CardDescription>Review your purchase details</CardDescription>
-                        </CardHeader>
-                        <CardContent className="h-full">
-                            <div className="flex h-full flex-col space-y-4">
-                                <div className="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex w-20 items-center justify-center rounded-full">
-                                            {data.network ? (
-                                                <img
-                                                    src={networks.find((network) => network.name === data.network)?.logo}
-                                                    alt={data.network || 'Network'}
-                                                    className="h-10 min-w-10 md:h-14"
-                                                />
-                                            ) : (
-                                                <MessageCircleQuestionIcon className="h-10 min-w-10 md:h-14" />
-                                            )}
-                                        </div>
-                                        <div>
-                                            <p className="font-medium">{data.network || 'Select Network'}</p>
-                                            <p className="text-muted-foreground text-sm">{data.phone_number || 'No number selected'}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3 border py-4">
-                                    <div className="flex justify-between px-4">
-                                        <span className="text-muted-foreground">Airtime Amount</span>
-                                        <span className="font-medium">{toMoney(Number(data.amount) || 0)}</span>
-                                    </div>
-                                    <div className="flex justify-between px-4">
-                                        <span className="text-muted-foreground">Service Fee</span>
-                                        <span className="font-medium">{toMoney(0)}</span>
-                                    </div>
-                                    <Separator />
-                                    <div className="flex justify-between px-4">
-                                        <span className="font-medium">Total</span>
-                                        <span className="font-bold">{toMoney(Number(data.amount))}</span>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-3 pt-4">
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <CreditCard className="text-muted-foreground h-4 w-4" />
-                                        <span>Secure payment processing</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <Receipt className="text-muted-foreground h-4 w-4" />
-                                        <span>Instant airtime delivery</span>
-                                    </div>
-                                </div>
-
-                                <div className="mt-auto">
-                                    <Button className="neolift-effect hover:bg-primary w-full">Proceed to Payment</Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    {/* Order Summary */}
+                    {isMobile ? (
+                        <Drawer>
+                            <DrawerTrigger asChild>
+                                <Button className="w-full">Continue</Button>
+                            </DrawerTrigger>
+                            <DrawerContent className="h-full px-4">
+                                <DrawerHeader className="px-0">
+                                    <DrawerTitle className="">Order Summary</DrawerTitle>
+                                </DrawerHeader>
+                                {OrderSummaryContent}
+                            </DrawerContent>
+                        </Drawer>
+                    ) : (
+                        <Card className="rounded-none border-0 border-l shadow-md sm:border-l">
+                            <CardHeader>
+                                <CardTitle>Order Summary</CardTitle>
+                                <CardDescription>Review your purchase details</CardDescription>
+                            </CardHeader>
+                            <CardContent className="h-full">{OrderSummaryContent}</CardContent>
+                        </Card>
+                    )}
                 </div>
             </div>
         </AppLayout>
