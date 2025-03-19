@@ -21,7 +21,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Data Topup',
-        url: '/data',
+        url: route('data-topup.create'),
         icon: Wifi,
     },
     {
