@@ -10,7 +10,6 @@ import type { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { CreditCard, MessageCircleQuestionIcon, Receipt } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import {Aside, MainScreen, ServicePurchaseLayout} from "@/layouts/service-purchase-layout";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -123,16 +122,6 @@ export default function BuyAirtime() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-
-            <ServicePurchaseLayout>
-                <MainScreen>
-                    hi
-                </MainScreen>
-
-                <Aside>
-                    hello
-                </Aside>
-            </ServicePurchaseLayout>
             <div className="flex flex-col h-full rounded-xl sm:grid grid-cols-1 sm:grid-cols-2">
                     {/* Form */}
                     <Card className="rounded-none border-0 bg-transparent flex-1">
