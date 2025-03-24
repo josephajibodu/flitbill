@@ -122,17 +122,16 @@ export default function BuyAirtime() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl">
-                <div className="grid h-full flex-1 grid-cols-1 flex-col rounded-xl sm:grid-cols-2">
+            <div className="flex flex-col h-full rounded-xl sm:grid grid-cols-1 sm:grid-cols-2">
                     {/* Form */}
-                    <Card className="rounded-none border-0 bg-transparent">
+                    <Card className="rounded-none border-0 bg-transparent flex-1">
                         <CardContent>
                             <h2 className="mb-4 text-base font-medium">Select Network Provider</h2>
                             <div className="grid grid-cols-4 gap-4">
                                 {networks.map((network) => (
                                     <label
                                         className={cn(
-                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white md:h-[100px] md:justify-center',
+                                            'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-20 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white md:h-[100px] md:justify-center',
                                             {
                                                 'neo-active': data.network === network.name,
                                             },
@@ -211,9 +210,11 @@ export default function BuyAirtime() {
                     {/* Order Summary */}
                     {isMobile ? (
                         <Drawer>
-                            <DrawerTrigger asChild>
-                                <Button className="w-full">Continue</Button>
-                            </DrawerTrigger>
+                            <div className="px-4 py-4">
+                                <DrawerTrigger asChild>
+                                    <Button className="w-full">Continue</Button>
+                                </DrawerTrigger>
+                            </div>
                             <DrawerContent className="h-full px-4">
                                 <DrawerHeader className="px-0">
                                     <DrawerTitle className="">Order Summary</DrawerTitle>
@@ -231,7 +232,6 @@ export default function BuyAirtime() {
                         </Card>
                     )}
                 </div>
-            </div>
         </AppLayout>
     );
 }

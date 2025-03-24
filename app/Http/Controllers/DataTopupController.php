@@ -9,6 +9,7 @@ class DataTopupController extends Controller
 {
     public function index()
     {
+        $me = "hi there!";
         return Inertia::render('data-topup/history');
     }
 
