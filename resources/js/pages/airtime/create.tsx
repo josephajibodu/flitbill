@@ -153,7 +153,7 @@ export default function BuyAirtime() {
 
                 <Aside>
                     <div className="flex h-full flex-col space-y-4">
-                        <div className="bg-muted/50 flex items-center gap-4 rounded-lg p-4">
+                        <div className="bg-primary/10 flex items-center gap-4 rounded-lg border p-4">
                             <div className="flex items-center gap-3">
                                 <div className="flex w-20 items-center justify-center rounded-full">
                                     {data.network ? (
@@ -173,7 +173,7 @@ export default function BuyAirtime() {
                             </div>
                         </div>
 
-                        <div className="space-y-3 border py-4">
+                        <div className="space-y-3 rounded-lg border py-4">
                             <div className="flex justify-between px-4">
                                 <span className="text-muted-foreground">Airtime Amount</span>
                                 <span className="font-medium">{toMoney(Number(data.amount) || 0)}</span>
