@@ -1,6 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -59,7 +57,7 @@ export default function BuyData() {
                         {networks.map((network) => (
                             <label
                                 className={cn(
-                                    'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white sm:w-[100px] md:h-[100px] md:justify-center',
+                                    'neo-card-border neolift-effect-highlight group has-checked:neolift-effect flex h-20 cursor-pointer items-center justify-center gap-2 rounded-lg bg-white p-4 has-checked:text-white md:h-[100px] md:justify-center',
                                     {
                                         'neo-active': data.network === network.name,
                                     },
@@ -107,12 +105,14 @@ export default function BuyData() {
 
                     <div className="mt-8">
                         <Tabs defaultValue="Daily" className="h-full">
-                            <TabsList className="flex w-full justify-start gap-1 overflow-x-auto rounded-md border bg-transparent px-1">
-                                {['Daily', 'Weekly', 'Monthly', '6 Months', 'Yearly'].map((name) => (
-                                    <TabsTrigger value={name} className="flex-grow-0 rounded-md">
-                                        {name}
-                                    </TabsTrigger>
-                                ))}
+                            <TabsList className="rounded-md border bg-transparent px-1 w-full">
+                                <div className="flex overflow-x-scroll">
+                                    {['Daily', 'Weekly', 'Monthly', '6 Months', 'Yearly'].map((name) => (
+                                        <TabsTrigger value={name} className="flex-shrink-0 px-4 py-2 rounded-md">
+                                            {name}
+                                        </TabsTrigger>
+                                    ))}
+                                </div>
                             </TabsList>
 
                             {['Daily', 'Weekly', 'Monthly', '6 Months', 'Yearly'].map((name) => (
