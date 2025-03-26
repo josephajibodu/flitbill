@@ -6,7 +6,7 @@ import * as React from "react";
 import {cn} from "@/lib/utils";
 
 function MainScreen({ className, ...props }: React.ComponentProps<"div">) {
-    return <Card className="rounded-none border-0 bg-transparent flex-1">
+    return <Card className="rounded-none shadow-none border-0 bg-transparent flex-1 pb-[120px] sm:pb-6">
         <CardContent
             className={className}
             {...props}
@@ -29,7 +29,7 @@ function Aside({ className, ...props }: React.ComponentProps<"div">) {
             {/* Order Summary */}
             {isMobile ? (
                 <Drawer>
-                    <div className="px-4 py-4">
+                    <div className="px-4 py-4 fixed inset-x-0 bottom-0 bg-white">
                         <DrawerTrigger asChild>
                             <Button className="w-full">Continue</Button>
                         </DrawerTrigger>
@@ -65,7 +65,7 @@ function Aside({ className, ...props }: React.ComponentProps<"div">) {
 function ServicePurchaseLayout({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
-            className={cn("flex flex-col h-full rounded-xl sm:grid grid-cols-1 sm:grid-cols-2", className)}
+            className={cn("flex flex-col flex-1 rounded-xl sm:grid grid-cols-1 sm:grid-cols-2", className)}
             {...props}
         />
     );
