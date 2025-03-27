@@ -23,7 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const networks = [
-    { name: 'MTN', logo: '/images/providers/mtn.svg', color: '#ffce27' },
+    { name: 'MTN', logo: '/images/providers/mtn.png', color: '#ffce27' },
     { name: 'Airtel', logo: '/images/providers/airtel.svg', color: '#ff1f1a' },
     { name: 'Glo', logo: '/images/providers/glo.svg', color: '#448141' },
     { name: '9mobile', logo: '/images/providers/9mobile.svg', color: '#1b765d' },
@@ -73,7 +73,7 @@ export default function BuyData() {
                                         src={network.logo}
                                         alt={network.name}
                                         className={cn(
-                                            'h-10 grayscale transition-all duration-200 group-hover:grayscale-0 group-has-checked:grayscale-0 md:h-14 md:min-w-20',
+                                            'h-10 grayscale transition-all duration-200 group-hover:grayscale-0 group-has-checked:grayscale-0 md:h-14 object-fit',
                                         )}
                                     />
                                     <span className="text-app-black sr-only">{network.name}</span>
