@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    /**
+     * Added Services
+     */
+    'vtpass' => [
+        'url' => env('VTPASS_BASE_URL', 'https://vtpass.com/api/'),
+        'api_key' => env('VTPASS_API_KEY'),
+        'pub_key' => env('VTPASS_PUBLIC_KEY'),
+        'secret' => env('VTPASS_SECRET_KEY'),
+    ],
+
 ];
