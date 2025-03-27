@@ -2,8 +2,6 @@
 
 namespace App\Services\VTPass;
 
-use Carbon\Carbon;
-use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +11,10 @@ use Throwable;
 
 class VTPassClient
 {
+    use CanVendElectricity;
+    use CanVendData;
+    use CanVendAirtime;
+
     public string $baseUrl;
     public string $apiKey;
     public string $publicKey;
@@ -25,7 +27,6 @@ class VTPassClient
         $this->publicKey = config('services.vtpass.pub_key');
         $this->secretKey = config('services.vtpass.secret');
     }
-
 
     /**
      * Fetch available services.
@@ -58,52 +59,6 @@ class VTPassClient
     public function walletBalance(): ?array
     {
         return $this->request('GET', 'balance');
-    }
-
-    /**
-     * Purchase airtime from any of the available providers
-     *
-     * @param string $requestId
-     * @param string $providerId
-     * @param float $amount
-     * @param string $phoneNumber
-     * @return array|null
-     */
-    public function purchaseAirtime(string $requestId, string $providerId, float $amount, string $phoneNumber): ?array
-    {
-        return $this->request('POST', 'pay', [
-            'request_id' => $requestId,
-            'serviceID' => $providerId,
-            'amount' => $amount,
-            'phone' => $phoneNumber,
-        ]);
-    }
-
-    /**
-     * Purchase data plan from any of the available providers
-     *
-     * @param string $requestId
-     * @param string $providerId
-     * @param string $billerCode
-     * @param string $planId
-     * @param string $phoneNumber
-     * @return array|null
-     */
-    public function purchaseData(
-        string $requestId,
-        string $providerId,
-        string $billerCode,
-        string $planId,
-        string $phoneNumber,
-    ): ?array
-    {
-        return $this->request('POST', 'pay', [
-            'request_id' => $requestId,
-            'serviceID' => $providerId,
-            'billerCode' => $billerCode,
-            'planId' => $planId,
-            'phone' => $phoneNumber,
-        ]);
     }
 
     /**

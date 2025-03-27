@@ -2,33 +2,11 @@
 
 namespace App\Services\VTPass;
 
-trait CanVendAirtime
+trait CanVendData
 {
 
     /**
-     * Verify Meter Number
-     *
-     * @param string $billerCode
-     * @param string $providerId
-     * @param string $type
-     * @return array|null
-     */
-    public function verifyMeterNumber(
-        string $billerCode,
-        string $providerId,
-        string $type,
-    ): ?array
-    {
-        return $this->request('POST', 'merchant-verify', [
-            'billerCode' => $billerCode,
-            'serviceID' => $providerId,
-            'type' => $type,
-        ]);
-    }
-
-
-    /**
-     * Purchase electricity from any of the available providers
+     * Purchase data plan from any of the available providers
      *
      * @param string $requestId
      * @param string $providerId
@@ -37,7 +15,7 @@ trait CanVendAirtime
      * @param string $phoneNumber
      * @return array|null
      */
-    public function purchasePower(
+    public function purchaseData(
         string $requestId,
         string $providerId,
         string $billerCode,
@@ -53,5 +31,4 @@ trait CanVendAirtime
             'phone' => $phoneNumber,
         ]);
     }
-
 }
