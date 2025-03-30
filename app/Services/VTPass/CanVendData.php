@@ -2,7 +2,7 @@
 
 namespace App\Services\VTPass;
 
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 trait CanVendData
 {

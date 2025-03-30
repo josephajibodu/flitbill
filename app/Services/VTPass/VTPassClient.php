@@ -2,6 +2,7 @@
 
 namespace App\Services\VTPass;
 
+use App\Enums\CableProvider;
 use App\Enums\NetworkProvider;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
@@ -15,6 +16,7 @@ class VTPassClient
     use CanVendElectricity;
     use CanVendData;
     use CanVendAirtime;
+    use CanVendCable;
 
     public string $baseUrl;
     public string $apiKey;
@@ -37,6 +39,29 @@ class VTPassClient
     public function availableServices(): ?array
     {
         return $this->request('GET', 'service-categories');
+    }
+
+    /**
+     * Fetch available plans.
+     *
+     * @param string $type
+     * @param string $service
+     * @return array
+     */
+    public function availablePlans(string $type, string $service): array
+    {
+        $validTypes = ['data', 'cables'];
+
+        if (!in_array($type, $validTypes, true)) {
+            Log::warning("Invalid service TYPE requested: $type");
+            return [];
+        }
+
+        return match ($type) {
+            'data' => $this->getDataPlans($service) ?? [],
+            'cables' => $this->getCablePlans($service) ?? [],
+            default => [],
+        };
     }
 
     /**
@@ -82,6 +107,16 @@ class VTPassClient
             NetworkProvider::GLO => ['glo-data', 'glo-sme-data'],
             NetworkProvider::AIRTEL => 'airtel-data',
             NetworkProvider::_9MOBILE => 'etisalat-data',
+        };
+    }
+
+    public function getCablePlanKeyByProvider(CableProvider $network): string|array
+    {
+        return match ($network) {
+            CableProvider::Startimes => 'startimes',
+            CableProvider::GoTV => 'gotv',
+            CableProvider::DSTV => 'dstv',
+            CableProvider::ShowMax => 'showmax',
         };
     }
 
