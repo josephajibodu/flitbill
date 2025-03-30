@@ -2,6 +2,8 @@
 
 namespace App\Services\VTPass;
 
+use http\Exception\InvalidArgumentException;
+
 trait CanVendData
 {
 
@@ -29,6 +31,23 @@ trait CanVendData
             'billerCode' => $billerCode,
             'planId' => $planId,
             'phone' => $phoneNumber,
+        ]);
+    }
+
+    /**
+     * Get available plans for a specific network provide
+     *
+     * @param string $provider
+     * @return array|null
+     */
+    public function getDataPlans(string $provider): ?array
+    {
+        if (! in_array($provider, ['mtn-data', 'airtel-data', 'glo-data', 'etisalat-data', 'glo-sme-data'])) {
+            throw new InvalidArgumentException("Invalid service ID: $provider");
+        }
+
+        return $this->request('GET', 'service-variations', [
+            'serviceID' => $provider
         ]);
     }
 }

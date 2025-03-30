@@ -2,6 +2,7 @@
 
 namespace App\Services\VTPass;
 
+use App\Enums\NetworkProvider;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -72,6 +73,16 @@ class VTPassClient
         return $this->request('POST', 'requery', [
             'request_id' => $requestId
         ]);
+    }
+
+    public function getPlanKeyByNetwork(NetworkProvider $network): string|array
+    {
+        return match ($network) {
+            NetworkProvider::MTN => 'mtn-data',
+            NetworkProvider::GLO => ['glo-data', 'glo-sme-data'],
+            NetworkProvider::AIRTEL => 'airtel-data',
+            NetworkProvider::_9MOBILE => 'etisalat-data',
+        };
     }
 
     /**

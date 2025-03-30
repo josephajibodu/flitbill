@@ -39,25 +39,32 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereBannedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereBannedReason($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDateOfBirth($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereFirstName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereGender($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereNationality($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereOtherName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereReferralCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUsername($value)
  */
 	class User extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $service
+ * @property string $code
+ * @property string $amount
+ * @property string $name
+ * @property \App\Enums\DurationType $duration_type
+ * @property string $duration
+ * @property string|null $size
+ * @property string|null $size_unit
+ * @property string|null $extras
+ * @property int $is_active
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \App\Enums\SizeUnit $size_type
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VtPassPlan newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VtPassPlan newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|VtPassPlan query()
+ */
+	class VtPassPlan extends \Eloquent {}
 }
 
