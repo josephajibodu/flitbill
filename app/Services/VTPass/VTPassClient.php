@@ -141,6 +141,14 @@ class VTPassClient
                 default => throw new InvalidArgumentException("Unsupported HTTP method: $method")
             };
 
+            logger()->channel('api_logs')->info('HTTP Request', [
+                'method' => $method,
+                'endpoint' => $endpoint,
+                'data' => $data,
+                'response_status' => $response->status(),
+                'response_body' => $response->body(),
+            ]);
+
             if ($response->successful()) {
                 return $response->json();
             }

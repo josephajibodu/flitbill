@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum DurationType: string
 {
+    case Hourly = "hourly";
     case Daily = "daily";
     case Weekly = "weekly";
     case BiWeekly = "bi-weekly";
@@ -16,6 +17,7 @@ enum DurationType: string
     public function getLabel(): string
     {
         return match ($this) {
+            self::Hourly => "hourly",
             self::Daily => "Daily",
             self::Weekly => "Weekly",
             self::BiWeekly => "2 Weeks",

@@ -13,6 +13,7 @@ class VtPassPlan extends Model
         'code',
         'amount',
         'name',
+        'label',
         'duration_type',
         'duration',
         'size',

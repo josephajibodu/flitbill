@@ -45,4 +45,7 @@ return [
         'secret' => env('VTPASS_SECRET_KEY'),
     ],
 
+    'anthropic' => [
+        'key' => env('ANTHROPIC_KEY')
+    ]
 ];

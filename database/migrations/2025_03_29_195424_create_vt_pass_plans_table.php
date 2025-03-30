@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('code');
             $table->string('amount');
             $table->string('name');
+            $table->string('label')->nullable();
             $table->string('duration_type');
             $table->string('duration');
             $table->string('size')->nullable();
