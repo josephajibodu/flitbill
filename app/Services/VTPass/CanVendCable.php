@@ -3,46 +3,54 @@
 namespace App\Services\VTPass;
 
 use App\Enums\Electricity\MeterType;
+use App\Services\VTPass\Models\CommissionRateData;
+use App\Services\VTPass\Models\PlanCollection;
+use App\Services\VTPass\Models\SmartCardData;
+use App\Services\VTPass\Models\TransactionData;
 use InvalidArgumentException;
+use Throwable;
 
 trait CanVendCable
 {
     /**
-     * Verify Meter Number
+     * Verify SmartCard Number
      *
      * @param string $billerCode
      * @param string $providerId
-     * @param string $type
-     * @return array|null
+     * @return SmartCardData
+     * @throws Throwable
      */
-    public function _verifyMeterNumber(
-        string $billerCode,
+    public function verifySmartCardNumber(
+        string $billersCode,
         string $providerId,
-        string $type,
-    ): ?array
+    ): SmartCardData
     {
-        return $this->request('POST', 'merchant-verify', [
-            'billerCode' => $billerCode,
+        $data = $this->request('POST', 'merchant-verify', [
+            'billersCode' => $billersCode,
             'serviceID' => $providerId,
-            'type' => $type,
         ]);
+
+        return SmartCardData::fromArray($data['content']);
     }
 
     /**
      * Get available plans for a specific cable tv provider
      *
      * @param string $provider
-     * @return array|null
+     * @return PlanCollection
+     * @throws Throwable
      */
-    public function getCablePlans(string $provider): ?array
+    public function getCablePlans(string $provider): PlanCollection
     {
         if (! in_array($provider, ['showmax', 'startimes', 'gotv', 'dstv'])) {
             throw new InvalidArgumentException("Invalid service ID: $provider");
         }
 
-        return $this->request('GET', 'service-variations', [
+        $data = $this->request('GET', 'service-variations', [
             'serviceID' => $provider
         ]);
+
+        return PlanCollection::fromArray($data['content']['variations']);
     }
 
 
@@ -51,28 +59,38 @@ trait CanVendCable
      *
      * @param string $requestId
      * @param string $providerId
-     * @param string $billerCode
-     * @param MeterType $meterType
-     * @param string $amount
+     * @param string $billersCode
+     * @param string $planCode
+     * @param string $subscriptionType
      * @param string $phoneNumber
-     * @return array|null
+     * @param string $quality
+     * @return TransactionData
+     * @throws Throwable
      */
     public function purchaseCable(
         string $requestId,
         string $providerId,
-        string $billerCode,
-        MeterType $meterType,
-        string $amount,
+        string $billersCode,
+        string $planCode,
+        string $subscriptionType,
         string $phoneNumber,
-    ): ?array
+        string $quantity,
+    ): TransactionData
     {
-        return $this->request('POST', 'pay', [
+        if (!in_array($subscriptionType, ['renew', 'change'])) {
+            throw new InvalidArgumentException("Invalid subscription type");
+        }
+
+        $data = $this->request('POST', 'pay', [
             'request_id' => $requestId,
             'serviceID' => $providerId,
-            'billerCode' => $billerCode,
-            'variation_code' => $meterType->value,
-            'amount' => $amount,
+            'billersCode' => $billersCode,
+            'variation_code' => $planCode,
+            'subscriptionType' => $subscriptionType,
             'phone' => $phoneNumber,
+            'quantity' => $quantity,
         ]);
+
+        return TransactionData::fromArray($data['content']['transactions']);
     }
 }

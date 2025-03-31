@@ -210,3 +210,18 @@ Artisan::command('anthropic:count', function () {
 
     $this->info("Token Count : ".json_encode($response));
 })->purpose('Ask questions from Claude AI');
+
+Artisan::command('app:test', function () {
+    $client = app(VTPassClient::class);
+    $data = app(VTPassClient::class)->purchaseCable(
+        requestId: $client->generateRequestID(),
+        providerId: "dstv",
+        billersCode: "1212121212",
+        planCode: "dstv45",
+        subscriptionType: "change",
+        phoneNumber: "123450987623",
+        quality: 1
+    );
+
+    dd($data);
+})->purpose('App test');

@@ -4,6 +4,7 @@ namespace App\Services\VTPass;
 
 use App\Enums\CableProvider;
 use App\Enums\NetworkProvider;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -123,11 +124,12 @@ class VTPassClient
     /**
      * Make an API request (GET or POST) and handle errors centrally.
      *
-     * @param string $method   GET or POST
+     * @param string $method GET or POST
      * @param string $endpoint API endpoint (without base URL)
-     * @param array  $data     Data for POST requests (optional)
+     * @param array $data Data for POST requests (optional)
      *
      * @return array|null Response data or null on failure
+     * @throws Throwable
      */
     private function request(string $method, string $endpoint, array $data = []): ?array
     {
@@ -158,7 +160,7 @@ class VTPassClient
             // Log the error (optional)
             Log::error("VTPass API Error: {$e->getMessage()}");
 
-            return null; // Return null on failure
+            throw $e;
         }
     }
 
@@ -178,7 +180,7 @@ class VTPassClient
         ];
     }
 
-    private function generateRequestID(): string
+    public function generateRequestID(): string
     {
         $currentData = now()->timezone('Africa/Lagos')->format('YmdHi');
         $id = Str::random(10);
