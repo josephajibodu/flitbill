@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Electricity\MeterType;
 use App\Enums\NetworkProvider;
 use App\Services\AnthropicAI\Anthropic;
 use App\Services\VTPass\VTPassClient;
@@ -213,14 +214,13 @@ Artisan::command('anthropic:count', function () {
 
 Artisan::command('app:test', function () {
     $client = app(VTPassClient::class);
-    $data = app(VTPassClient::class)->purchaseCable(
+    $data = app(VTPassClient::class)->purchasePower(
         requestId: $client->generateRequestID(),
-        providerId: "dstv",
-        billersCode: "1212121212",
-        planCode: "dstv45",
-        subscriptionType: "change",
-        phoneNumber: "123450987623",
-        quality: 1
+        providerId: 'ibadan-electric',
+        billersCode: '1111111111111',
+        meterType: MeterType::Prepaid,
+        amount: 5000,
+        phoneNumber: '123450987623'
     );
 
     dd($data);

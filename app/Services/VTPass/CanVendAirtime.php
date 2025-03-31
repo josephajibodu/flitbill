@@ -2,6 +2,9 @@
 
 namespace App\Services\VTPass;
 
+use App\Services\VTPass\Models\TransactionData;
+use Throwable;
+
 trait CanVendAirtime
 {
 
@@ -12,15 +15,18 @@ trait CanVendAirtime
      * @param string $providerId
      * @param float $amount
      * @param string $phoneNumber
-     * @return array|null
+     * @return TransactionData
+     * @throws Throwable
      */
-    public function purchaseAirtime(string $requestId, string $providerId, float $amount, string $phoneNumber): ?array
+    public function purchaseAirtime(string $requestId, string $providerId, float $amount, string $phoneNumber): TransactionData
     {
-        return $this->request('POST', 'pay', [
+        $data = $this->request('POST', 'pay', [
             'request_id' => $requestId,
             'serviceID' => $providerId,
             'amount' => $amount,
             'phone' => $phoneNumber,
         ]);
+
+        return TransactionData::fromArray($data['content']['transactions']);
     }
 }

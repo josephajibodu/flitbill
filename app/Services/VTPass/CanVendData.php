@@ -2,7 +2,10 @@
 
 namespace App\Services\VTPass;
 
+use App\Services\VTPass\Models\PlanCollection;
+use App\Services\VTPass\Models\TransactionData;
 use InvalidArgumentException;
+use Throwable;
 
 trait CanVendData
 {
@@ -15,7 +18,8 @@ trait CanVendData
      * @param string $billerCode
      * @param string $planId
      * @param string $phoneNumber
-     * @return array|null
+     * @return TransactionData
+     * @throws Throwable
      */
     public function purchaseData(
         string $requestId,
@@ -23,31 +27,36 @@ trait CanVendData
         string $billerCode,
         string $planId,
         string $phoneNumber,
-    ): ?array
+    ): TransactionData
     {
-        return $this->request('POST', 'pay', [
+        $data = $this->request('POST', 'pay', [
             'request_id' => $requestId,
             'serviceID' => $providerId,
-            'billerCode' => $billerCode,
-            'planId' => $planId,
+            'billersCode' => $billerCode,
+            'variation_code' => $planId,
             'phone' => $phoneNumber,
         ]);
+
+        return TransactionData::fromArray($data['content']['transactions']);
     }
 
     /**
      * Get available plans for a specific network provide
      *
      * @param string $provider
-     * @return array|null
+     * @return PlanCollection
+     * @throws Throwable
      */
-    public function getDataPlans(string $provider): ?array
+    public function getDataPlans(string $provider): PlanCollection
     {
         if (! in_array($provider, ['mtn-data', 'airtel-data', 'glo-data', 'etisalat-data', 'glo-sme-data'])) {
             throw new InvalidArgumentException("Invalid service ID: $provider");
         }
 
-        return $this->request('GET', 'service-variations', [
+        $data = $this->request('GET', 'service-variations', [
             'serviceID' => $provider
         ]);
+
+        return PlanCollection::fromArray($data['content']['variations']);
     }
 }

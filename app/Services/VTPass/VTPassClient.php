@@ -4,7 +4,6 @@ namespace App\Services\VTPass;
 
 use App\Enums\CableProvider;
 use App\Enums\NetworkProvider;
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;

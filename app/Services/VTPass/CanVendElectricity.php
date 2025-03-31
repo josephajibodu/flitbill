@@ -3,29 +3,36 @@
 namespace App\Services\VTPass;
 
 use App\Enums\Electricity\MeterType;
+use App\Services\VTPass\Models\ElectricityProfileData;
+use App\Services\VTPass\Models\ElectricityTransactionData;
+use App\Services\VTPass\Models\TransactionData;
 use Couchbase\Meter;
+use Throwable;
 
 trait CanVendElectricity
 {
     /**
      * Verify Meter Number
      *
-     * @param string $billerCode
+     * @param string $billersCode
      * @param string $providerId
      * @param string $type
-     * @return array|null
+     * @return ElectricityProfileData
+     * @throws Throwable
      */
     public function verifyMeterNumber(
-        string $billerCode,
+        string $billersCode,
         string $providerId,
         string $type,
-    ): ?array
+    ): ElectricityProfileData
     {
-        return $this->request('POST', 'merchant-verify', [
-            'billerCode' => $billerCode,
+        $data = $this->request('POST', 'merchant-verify', [
+            'billersCode' => $billersCode,
             'serviceID' => $providerId,
             'type' => $type,
         ]);
+
+        return ElectricityProfileData::fromArray($data['content']);
     }
 
 
@@ -34,28 +41,31 @@ trait CanVendElectricity
      *
      * @param string $requestId
      * @param string $providerId
-     * @param string $billerCode
-     * @param string $meterType
+     * @param string $billersCode
+     * @param MeterType $meterType
      * @param string $amount
      * @param string $phoneNumber
-     * @return array|null
+     * @return TransactionData
+     * @throws Throwable
      */
     public function purchasePower(
         string $requestId,
         string $providerId,
-        string $billerCode,
+        string $billersCode,
         MeterType $meterType,
         string $amount,
         string $phoneNumber,
-    ): ?array
+    ): TransactionData
     {
-        return $this->request('POST', 'pay', [
+        $data =  $this->request('POST', 'pay', [
             'request_id' => $requestId,
             'serviceID' => $providerId,
-            'billerCode' => $billerCode,
-            'variation_code' => $meterType->value,
+            'billersCode' => $billersCode,
+                'variation_code' => $meterType->value,
             'amount' => $amount,
             'phone' => $phoneNumber,
         ]);
+
+        return ElectricityTransactionData::fromArray($data);
     }
 }

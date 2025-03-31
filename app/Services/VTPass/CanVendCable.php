@@ -2,8 +2,6 @@
 
 namespace App\Services\VTPass;
 
-use App\Enums\Electricity\MeterType;
-use App\Services\VTPass\Models\CommissionRateData;
 use App\Services\VTPass\Models\PlanCollection;
 use App\Services\VTPass\Models\SmartCardData;
 use App\Services\VTPass\Models\TransactionData;
