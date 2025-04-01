@@ -33,8 +33,13 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $bonus_balance
+ * @property-read mixed $main_balance
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \App\Models\Wallet|null $wallet
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WalletTransaction> $walletTransactions
+ * @property-read int|null $wallet_transactions_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -52,19 +57,60 @@ namespace App\Models{
  * @property string $code
  * @property string $amount
  * @property string $name
+ * @property string|null $label
  * @property \App\Enums\DurationType $duration_type
  * @property string $duration
  * @property string|null $size
- * @property string|null $size_unit
+ * @property \App\Enums\SizeUnit|null $size_unit
  * @property string|null $extras
  * @property int $is_active
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Enums\SizeUnit $size_type
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VtPassPlan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VtPassPlan newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|VtPassPlan query()
  */
 	class VtPassPlan extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $main
+ * @property string $bonus
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Wallet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Wallet newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Wallet query()
+ */
+	class Wallet extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $wallet_id
+ * @property string $source
+ * @property string $destination
+ * @property string $type
+ * @property string $reason
+ * @property int $amount
+ * @property \App\Enums\WalletTransactionStatus $status
+ * @property string|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Wallet $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WalletTransaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WalletTransaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WalletTransaction query()
+ */
+	class WalletTransaction extends \Eloquent {}
 }
 

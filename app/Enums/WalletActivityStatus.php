@@ -2,7 +2,8 @@
 
 namespace App\Enums;
 
-use App\Traits\HasValues;
+
+use App\Enums\Traits\HasValues;
 
 enum WalletActivityStatus: string
 {

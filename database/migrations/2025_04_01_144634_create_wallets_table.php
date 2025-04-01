@@ -9,8 +9,11 @@ return new class extends Migration {
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->string('main');
-            $table->string('bonus');
+
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('main')->default(0);
+            $table->string('bonus')->default(0);
+
             $table->timestamps();
         });
 

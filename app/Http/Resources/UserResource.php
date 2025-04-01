@@ -23,7 +23,10 @@ class UserResource extends JsonResource
             'phone_number' => $this->phone_number,
             'email' => $this->email,
             'banned_at' => $this->banned_at,
-            'banned_reason' => $this->banned_reason
+            'banned_reason' => $this->banned_reason,
+
+            'main_balance' => $this->main_balance,
+            'bonus_balance' => $this->bonus_balance
         ];
     }
 }

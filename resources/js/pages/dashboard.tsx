@@ -1,6 +1,6 @@
 import AppLayout from "@/layouts/app-layout"
-import type {BreadcrumbItem} from "@/types"
-import {Head} from "@inertiajs/react"
+import type {BreadcrumbItem, PageProps} from "@/types"
+import {Head, usePage} from "@inertiajs/react"
 import {Button} from "@/components/ui/button"
 import {Database, MoreHorizontal, Phone, Tv, WalletMinimal, Zap} from "lucide-react"
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
@@ -11,6 +11,7 @@ import {
     PaginationLink, PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination";
+import {toMoney} from "@/lib/utils";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,12 +21,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 ]
 
 export default function Dashboard() {
+    const { auth } = usePage<PageProps>().props;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard"/>
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <h1 className="text-xl">
-                    Welcome back, <b>Esther!</b>
+                    Welcome back, <b>{auth.user.first_name}!</b>
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 h-full flex-1 flex-col gap-6 rounded-xl">
                     <div className="flex flex-col gap-8">
@@ -37,7 +40,7 @@ export default function Dashboard() {
                                   </span>
                                     <div>
                                         <span className="text-app-black font-medium">Wallet Balance</span>
-                                        <h2 className="text-3xl font-bold text-app-black">₦200.00</h2>
+                                        <h2 className="text-3xl font-bold text-app-black">{toMoney(auth.user.main_balance ?? 0)}</h2>
                                     </div>
                                 </div>
                             </div>
