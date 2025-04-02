@@ -36,7 +36,7 @@ export default function Dashboard() {
                             <div className="sm:mt-16">
                                 <div className="flex items-center gap-4">
                                   <span className="neo-icon size-14 flex items-center justify-center">
-                                    <WalletMinimal className="size-8 text-app-black"/>
+                                    <WalletMinimal className="size-8 text-app-black dark:text-foreground"/>
                                   </span>
                                     <div>
                                         <span className="text-app-black font-medium">Wallet Balance</span>
@@ -46,9 +46,9 @@ export default function Dashboard() {
                             </div>
 
                             <div className="flex gap-4 mt-8">
-                                <Button variant="secondary" className="text-app-black neo-button w-full hover:bg-unset">Add
+                                <Button variant="secondary" className="text-app-black dark:text-foreground neo-button w-full hover:bg-unset">Add
                                     Funds</Button>
-                                <Button className="bg-neo-pink text-app-black hover:bg-unset neo-button w-full">Withdraw
+                                <Button className="bg-neo-pink text-app-black dark:text-foreground hover:bg-unset neo-button w-full">Withdraw
                                     Funds</Button>
                             </div>
                         </div>
@@ -59,35 +59,35 @@ export default function Dashboard() {
                             <div className="grid grid-cols-3 sm:grid-cols-5 gap-4">
                                 <a
                                     href="#"
-                                    className="flex flex-col items-center justify-center gap-2 p-3 bg-primary/20 rounded-md neolift-effect"
+                                    className="flex flex-col items-center justify-center h-24  gap-2 p-3 bg-primary/20 dark:bg-primary rounded-md neolift-effect"
                                 >
                                     <Database className="size-6 text-app-black" />
                                     <span className="text-xs font-medium text-app-black">Data</span>
                                 </a>
                                 <a
                                     href="#"
-                                    className="flex flex-col items-center justify-center gap-2 p-3 bg-primary/20 rounded-md neolift-effect"
+                                    className="flex flex-col items-center justify-center h-24 gap-2 p-3 bg-primary/20 dark:bg-primary rounded-md neolift-effect"
                                 >
                                     <Phone className="size-6 text-app-black" />
                                     <span className="text-xs font-medium text-app-black">Airtime</span>
                                 </a>
                                 <a
                                     href="#"
-                                    className="flex flex-col items-center justify-center gap-2 p-3 bg-primary/20 rounded-md neolift-effect"
+                                    className="flex flex-col items-center justify-center h-24 gap-2 p-3 bg-primary/20 dark:bg-primary rounded-md neolift-effect"
                                 >
                                     <Zap className="size-6 text-app-black" />
                                     <span className="text-xs font-medium text-app-black">Electricity</span>
                                 </a>
                                 <a
                                     href="#"
-                                    className="flex flex-col items-center justify-center gap-2 p-3 bg-primary/20 rounded-md neolift-effect"
+                                    className="flex flex-col items-center justify-center h-24 gap-2 p-3 bg-primary/20 dark:bg-primary rounded-md neolift-effect"
                                 >
                                     <Tv className="size-6 text-app-black" />
                                     <span className="text-xs font-medium text-app-black">Cable</span>
                                 </a>
                                 <a
                                     href="#"
-                                    className="flex flex-col items-center justify-center gap-2 p-3 bg-primary/20 rounded-md neolift-effect"
+                                    className="flex flex-col items-center justify-center h-24 gap-2 p-3 bg-primary/20 dark:bg-primary rounded-md neolift-effect"
                                 >
                                     <MoreHorizontal className="size-6 text-app-black" />
                                     <span className="text-xs font-medium text-app-black">More</span>
