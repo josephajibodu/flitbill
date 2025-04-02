@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {Check} from "lucide-react";
 import {toMoney} from "@/lib/utils";
 import {usePage} from "@inertiajs/react";
@@ -28,8 +28,8 @@ export default function ({ amount, onChange } : {amount?: number, onChange: (val
         }
     }, [amount, user.main_balance, user.bonus_balance, wallet])
 
-    const handleWalletChange = (e) =>  {
-        setWallet(e.target.value);
+    const handleWalletChange = (e: ChangeEvent<HTMLInputElement>) =>  {
+        setWallet(e.target.value as "main" | "bonus" | "main_bonus");
         onChange && onChange(e.target.value)
     }
 
