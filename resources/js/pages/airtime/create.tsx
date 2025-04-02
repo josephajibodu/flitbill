@@ -11,6 +11,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { CreditCard, MessageCircleQuestionIcon, Receipt } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import {Aside, MainScreen, ServicePurchaseLayout} from "@/layouts/service-purchase-layout";
+import BalanceSummary from "@/components/balance-summary";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -38,6 +39,7 @@ export default function BuyAirtime() {
         network: '',
         phone_number: '',
         amount: '',
+        wallet: '',
     });
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,8 +130,8 @@ export default function BuyAirtime() {
                                 Amount
                             </Label>
                             <span className="text-sm">
-                                        Min: <span className="font-semibold">₦100</span> | Max: <span className="font-semibold">₦100,000</span>
-                                    </span>
+                                Min: <span className="font-semibold">₦100</span> | Max: <span className="font-semibold">₦100,000</span>
+                            </span>
                         </div>
                         <Input type="text" id="amount" placeholder="₦0.00" value={formattedAmount} onChange={handleAmountChange} />
 
@@ -200,6 +202,7 @@ export default function BuyAirtime() {
                             </div>
                         </div>
 
+                        <BalanceSummary amount={Number(data.amount)} wallet={data.wallet} onChange={(value) => setData('wallet', value)} />
                         <div className="mt-auto mb-4">
                             <Button className="neolift-effect hover:bg-primary w-full">Proceed to Payment</Button>
                         </div>
