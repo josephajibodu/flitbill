@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('transaction_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('reference');
+            $table->string('reference')->index();
             $table->unsignedBigInteger('amount');
             $table->string('network')->comment('e.g. mtn');
             $table->string('phone_number');

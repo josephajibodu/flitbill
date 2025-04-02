@@ -27,6 +27,6 @@ trait CanVendAirtime
             'phone' => $phoneNumber,
         ]);
 
-        return TransactionData::fromArray($data['content']['transactions']);
+        return TransactionData::fromArray($data);
     }
 }

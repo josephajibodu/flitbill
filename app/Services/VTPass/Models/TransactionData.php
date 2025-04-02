@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 class TransactionData implements Arrayable
 {
     public function __construct(
+        public string $code,
         public string $status,
         public string $productName,
         public string $uniqueElement,
@@ -37,6 +38,7 @@ class TransactionData implements Arrayable
     public function toArray(): array
     {
         return [
+            'code' => $this->code,
             'status' => $this->status,
             'product_name' => $this->productName,
             'unique_element' => $this->uniqueElement,
@@ -68,27 +70,30 @@ class TransactionData implements Arrayable
      */
     public static function fromArray(array $data): static
     {
+        $transaction = $data['content']['transactions'];
+
         return new static(
-            $data['status'] ?? '',
-            $data['product_name'] ?? '',
-            $data['unique_element'] ?? '',
-            $data['unit_price'] ?? '',
-            $data['quantity'] ?? 0,
-            $data['service_verification'] ?? null,
-            $data['channel'] ?? '',
-            $data['commission'] ?? 0.0,
-            $data['total_amount'] ?? 0.0,
-            $data['discount'] ?? null,
-            $data['type'] ?? '',
-            $data['email'] ?? '',
-            $data['phone'] ?? '',
-            $data['name'] ?? null,
-            $data['convenience_fee'] ?? 0.0,
-            $data['amount'] ?? '',
-            $data['platform'] ?? '',
-            $data['method'] ?? '',
-            $data['transactionId'] ?? '',
-            CommissionRateData::fromArray($data['commission_details'] ?? [])
+            $data['code'] ?? '',
+            $transaction['status'] ?? '',
+            $transaction['product_name'] ?? '',
+            $transaction['unique_element'] ?? '',
+            $transaction['unit_price'] ?? '',
+            $transaction['quantity'] ?? 0,
+            $transaction['service_verification'] ?? null,
+            $transaction['channel'] ?? '',
+            $transaction['commission'] ?? 0.0,
+            $transaction['total_amount'] ?? 0.0,
+            $transaction['discount'] ?? null,
+            $transaction['type'] ?? '',
+            $transaction['email'] ?? '',
+            $transaction['phone'] ?? '',
+            $transaction['name'] ?? null,
+            $transaction['convenience_fee'] ?? 0.0,
+            $transaction['amount'] ?? '',
+            $transaction['platform'] ?? '',
+            $transaction['method'] ?? '',
+            $transaction['transactionId'] ?? '',
+            CommissionRateData::fromArray($transaction['commission_details'] ?? [])
         );
     }
 }

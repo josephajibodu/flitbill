@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\NetworkProvider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,14 @@ class Airtime extends Model
         'status',
         'metadata',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'network' => NetworkProvider::class,
+            'status' => Transaction::class
+        ];
+    }
 
     public function user(): BelongsTo
     {

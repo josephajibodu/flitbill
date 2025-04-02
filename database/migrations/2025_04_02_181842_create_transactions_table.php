@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('reference');
+            $table->string('reference')->index();
             $table->string('description')->nullable();
             $table->string('type');
             $table->unsignedBigInteger('amount');

@@ -214,13 +214,11 @@ Artisan::command('anthropic:count', function () {
 
 Artisan::command('app:test', function () {
     $client = app(VTPassClient::class);
-    $data = app(VTPassClient::class)->purchasePower(
+    $data = app(VTPassClient::class)->purchaseAirtime(
         requestId: $client->generateRequestID(),
-        providerId: 'ibadan-electric',
-        billersCode: '1111111111111',
-        meterType: MeterType::Prepaid,
+        providerId: 'mtn',
         amount: 5000,
-        phoneNumber: '123450987623'
+        phoneNumber: '400032220000'
     );
 
     dd($data);

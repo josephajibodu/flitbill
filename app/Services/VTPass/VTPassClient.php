@@ -4,6 +4,9 @@ namespace App\Services\VTPass;
 
 use App\Enums\CableProvider;
 use App\Enums\NetworkProvider;
+use App\Services\VTPass\Exceptions\VTPassException;
+use App\Services\VTPass\Exceptions\VTPassServerError;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -128,7 +131,10 @@ class VTPassClient
      * @param array $data Data for POST requests (optional)
      *
      * @return array|null Response data or null on failure
+     * @throws RequestException
      * @throws Throwable
+     * @throws VTPassException
+     * @throws ConnectionException
      */
     private function request(string $method, string $endpoint, array $data = []): ?array
     {
@@ -154,9 +160,16 @@ class VTPassClient
                 return $response->json();
             }
 
+            if ($response->serverError()) {
+                throw new VTPassException($response);
+            }
+
+            if ($response->clientError()) {
+                throw new VTPassException($response);
+            }
+
             throw new RequestException($response);
-        } catch (Throwable $e) {
-            // Log the error (optional)
+        } catch (Throwable|VTPassException $e) {
             Log::error("VTPass API Error: {$e->getMessage()}");
 
             throw $e;

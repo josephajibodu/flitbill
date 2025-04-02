@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('transaction_id');
-            $table->string('reference');
+            $table->string('reference')->index();
             $table->string('amount');
             $table->string('tv_identifier')->nullable()->comment('smart card number');
             $table->string('plan');

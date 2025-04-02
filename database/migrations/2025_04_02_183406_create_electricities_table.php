@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('transaction_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('reference');
+            $table->string('reference')->index();
             $table->string('amount');
             $table->string('meter_number');
             $table->string('provider')->comment('e.g. ibedc-electric');
