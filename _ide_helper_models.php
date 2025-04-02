@@ -16,6 +16,139 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int $user_id
+ * @property int $transaction_id
+ * @property string $reference
+ * @property int $amount
+ * @property string $network
+ * @property string $phone_number
+ * @property string $service
+ * @property string $status
+ * @property string $metadata
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Transaction $transaction
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\AirtimeFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Airtime newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Airtime newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Airtime query()
+ */
+	class Airtime extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $transaction_id
+ * @property string $reference
+ * @property string $amount
+ * @property string|null $tv_identifier
+ * @property string $plan
+ * @property string $provider
+ * @property string $service
+ * @property string $status
+ * @property string $metadata
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Transaction|null $transaction
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\CableFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Cable newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Cable newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Cable query()
+ */
+	class Cable extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $transaction_id
+ * @property string $reference
+ * @property int $amount
+ * @property string $network
+ * @property string $phone_number
+ * @property string $plan
+ * @property string $service
+ * @property string $status
+ * @property string $metadata
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Transaction $transaction
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\DataTopupFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DataTopup newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DataTopup newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DataTopup query()
+ */
+	class DataTopup extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $transaction_id
+ * @property string $reference
+ * @property string $amount
+ * @property string $meter_number
+ * @property string $provider
+ * @property string $service
+ * @property string $meter_type
+ * @property string|null $token
+ * @property string $status
+ * @property string $metadata
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Transaction $transaction
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\ElectricityFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Electricity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Electricity newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Electricity query()
+ */
+	class Electricity extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $reference
+ * @property string|null $description
+ * @property string $type
+ * @property int $amount
+ * @property int $balance
+ * @property string $status
+ * @property string $commission
+ * @property string $metadata
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\TransactionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Transaction query()
+ */
+	class Transaction extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string|null $first_name
  * @property string|null $last_name
  * @property string|null $other_name
