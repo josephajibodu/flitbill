@@ -29,6 +29,7 @@ class AirtimeTopupController extends Controller
         try {
             $airtimeTransaction->execute($data);
         } catch (\Throwable $e) {
+            throw $e;
             return back()->withErrors("Airtime transaction failed");
         }
 

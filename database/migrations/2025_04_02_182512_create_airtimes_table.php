@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('phone_number');
             $table->string('service')->comment('e.g. vtpass');
             $table->string('status')->comment('delivery status');
-            $table->longText('metadata');
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

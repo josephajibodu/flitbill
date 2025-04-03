@@ -65,7 +65,7 @@ function Aside({ className, ...props }: React.ComponentProps<"div">) {
 function ServicePurchaseLayout({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
-            className={cn("flex flex-col flex-1 rounded-xl sm:grid grid-cols-1 sm:grid-cols-2", className)}
+            className={cn("flex flex-col flex-1 rounded-xl sm:grid grid-cols-1 sm:grid-cols-2 h-full", className)}
             {...props}
         />
     );

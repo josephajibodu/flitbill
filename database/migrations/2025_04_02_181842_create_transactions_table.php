@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('balance');
             $table->string('status');
             $table->string('commission');
-            $table->string('metadata');
+            $table->string('metadata')->nullable();
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('meter_type');
             $table->string('token')->nullable();
             $table->string('status');
-            $table->string('metadata');
+            $table->string('metadata')->nullable();
             $table->timestamps();
         });
     }

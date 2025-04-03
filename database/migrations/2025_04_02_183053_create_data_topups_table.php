@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('plan');
             $table->string('service')->comment('e.g. vtpass');
             $table->string('status');
-            $table->longText('metadata');
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

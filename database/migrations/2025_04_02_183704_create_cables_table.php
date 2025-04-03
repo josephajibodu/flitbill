@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('provider')->comment('e.g. showmax');
             $table->string('service')->comment('e.g. vtpass');
             $table->string('status');
-            $table->string('metadata');
+            $table->string('metadata')->nullable();
             $table->timestamps();
         });
     }

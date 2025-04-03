@@ -36,7 +36,7 @@ class VTPassPlanExtractor extends Command
 
         $isDataPlan = $this->isDataPlan($planProvider);
         if ($isDataPlan) {
-            $planCode = $vtPassClient->getPlanKeyByNetwork(NetworkProvider::from($planProvider));
+            $planCode = $vtPassClient->getDataPlanKeyByNetwork(NetworkProvider::from($planProvider));
         } else {
             $planCode = $vtPassClient->getCablePlanKeyByProvider(CableProvider::from($planProvider));
         }

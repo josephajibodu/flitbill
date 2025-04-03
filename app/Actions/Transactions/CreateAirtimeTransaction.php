@@ -24,7 +24,9 @@ class CreateAirtimeTransaction
 
     public function execute(array $data): Transaction
     {
-        [$phone_number, $network, $amount] = $data;
+        $phone_number = $data['phone_number'];
+        $network = NetworkProvider::from($data['network']);
+        $amount = $data['amount'];
 
         DB::beginTransaction();
 
@@ -44,7 +46,7 @@ class CreateAirtimeTransaction
 
             $isSuccessful = $response->code === "000" && $response->status === "delivered";
 
-            $transaction = Transaction::create([
+            $transaction = Transaction::query()->create([
                 'user_id' => $user->id,
                 'reference' => Str::uuid(),
                 'description' => "Airtime Purchase of $amount NGN",
@@ -52,11 +54,10 @@ class CreateAirtimeTransaction
                 'amount' => $amount * 100,
                 'balance' => $user->main_balance,
                 'status' => TransactionStatus::Completed,
-                'commission' => 0,
-                'metadata' => null,
+                'commission' => $response->commission ?? 0,
             ]);
 
-            Airtime::create([
+            Airtime::query()->create([
                 'user_id' => $user->id,
                 'transaction_id' => $transaction->id,
                 'reference' => $airtimeReference,
@@ -65,7 +66,6 @@ class CreateAirtimeTransaction
                 'phone_number' => $phone_number,
                 'service' => 'vtpass',
                 'status' => $isSuccessful ? TransactionStatus::Completed : TransactionStatus::Pending,
-                'metadata' => json_encode($response->toArray()),
             ]);
 
             DB::commit();

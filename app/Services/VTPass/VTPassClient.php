@@ -103,13 +103,23 @@ class VTPassClient
         ]);
     }
 
-    public function getPlanKeyByNetwork(NetworkProvider $network): string|array
+    public function getDataPlanKeyByNetwork(NetworkProvider $network): string|array
     {
         return match ($network) {
             NetworkProvider::MTN => 'mtn-data',
             NetworkProvider::GLO => ['glo-data', 'glo-sme-data'],
             NetworkProvider::AIRTEL => 'airtel-data',
             NetworkProvider::_9MOBILE => 'etisalat-data',
+        };
+    }
+
+    public function getAirtimePlanKeyByNetwork(NetworkProvider $network): string|array
+    {
+        return match ($network) {
+            NetworkProvider::MTN => 'mtn',
+            NetworkProvider::GLO => 'glo',
+            NetworkProvider::AIRTEL => 'airtel',
+            NetworkProvider::_9MOBILE => 'etisalat',
         };
     }
 
