@@ -4,6 +4,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from './hooks/use-appearance';
+import { Toaster } from "@/components/ui/sonner"
 
 createInertiaApp({
     title: (title) => `${title} | Flitbill`,
@@ -11,7 +12,14 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
-        root.render(<App {...props} />);
+        const WrappedApp = (
+            <>
+                <App {...props} />
+                <Toaster richColors position="bottom-center" />
+            </>
+        )
+
+        root.render(WrappedApp);
     },
     progress: {
         color: '#4B5563',

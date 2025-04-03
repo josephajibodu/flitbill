@@ -6,10 +6,11 @@ import AppLayout from '@/layouts/app-layout';
 import { cn, toMoney } from '@/lib/utils';
 import type { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
-import { CreditCard, MessageCircleQuestionIcon, Receipt } from 'lucide-react';
+import {CreditCard, Loader, MessageCircleQuestionIcon, Receipt} from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import {Aside, MainScreen, ServicePurchaseLayout} from "@/layouts/service-purchase-layout";
 import BalanceSummary from "@/components/balance-summary";
+import {toast} from "sonner";
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -33,7 +34,7 @@ export default function BuyAirtime() {
     const [isMobile, setIsMobile] = useState(false);
 
     const [formattedAmount, setFormattedAmount] = useState('');
-    const { data, setData, post } = useForm({
+    const { data, setData, post, processing, reset } = useForm({
         network: '',
         phone_number: '',
         amount: '',
@@ -58,14 +59,15 @@ export default function BuyAirtime() {
         setData('amount', input); // Keep raw numeric value
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         post(route('airtime.store'), {
             onSuccess: params => {
-                console.log(params);
+                reset();
+                toast.success("Airtime purchase successful!")
             },
             onError: params => {
-                console.log("Error: ", params)
+                toast.error("Airtime purchase failed!")
             }
         })
     }
@@ -149,6 +151,7 @@ export default function BuyAirtime() {
                             <div className="flex gap-4 overflow-x-auto py-2">
                                 {[500, 1000, 2000, 5000, 10_000].map((amt, index) => (
                                     <Button
+                                        type="button"
                                         key={index}
                                         className="text-app-black neolift-effect hover:bg-primary h-8 w-[80px] border-none bg-gray-200 md:h-10"
                                         onClick={() => {
@@ -215,7 +218,10 @@ export default function BuyAirtime() {
 
                             <BalanceSummary amount={Number(data.amount)} onChange={(value) => setData('wallet', value)} />
                             <div className="mt-auto mb-4">
-                                <Button className="neolift-effect hover:bg-primary w-full" type="submit">Proceed to Payment</Button>
+                                <Button className="neolift-effect hover:bg-primary w-full" type="submit" disabled={processing}>
+                                    {processing && <Loader className="animate-spin"/>}
+                                    Proceed to Payment
+                                </Button>
                             </div>
                         </div>
                     </Aside>

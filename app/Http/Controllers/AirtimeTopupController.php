@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Transactions\CreateAirtimeTransaction;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Throwable;
 
 class AirtimeTopupController extends Controller
 {
@@ -28,8 +29,7 @@ class AirtimeTopupController extends Controller
 
         try {
             $airtimeTransaction->execute($data);
-        } catch (\Throwable $e) {
-            throw $e;
+        } catch (Throwable $e) {
             return back()->withErrors("Airtime transaction failed");
         }
 
